@@ -2,12 +2,15 @@
 #include <string>
 #include <iostream>
 #include <netdb.h>
+#include <stdlib.h>
+#include <time.h>
 #include<sys/socket.h>
 #include<arpa/inet.h> //inet_addr
 //#include <opencv2\highgui.h>
 #include "opencv2/highgui/highgui.hpp"
 //#include <opencv2\cv.h>
 #include "opencv2/opencv.hpp"
+#include <unistd.h>
 
 char * IP ="193.226.12.217";
 #define	PORT 20232
@@ -241,6 +244,17 @@ int sendThorughSocket(char *message){
 
 }
 
+int sendString(char * message){
+	for(int i=0;i<strlen(message);i++){
+		usleep(1000);
+		if(strchr("fb",message[i])){
+			sendThorughSocket(&message[i]);
+		}else{
+			continue;
+		}
+	}
+}
+
 int main(int argc, char* argv[])
 {
 
@@ -309,7 +323,8 @@ else{
 
 char message[5];
 scanf("%s", message);
-printf("%d\n",sendThorughSocket(message));
+//printf("%d\n",sendThorughSocket(message));
+sendString(message);
 	}
 	return 0;
 }
