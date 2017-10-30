@@ -1,10 +1,16 @@
 #include <sstream>
 #include <string>
 #include <iostream>
+#include <netdb.h>
+#include<sys/socket.h>
+#include<arpa/inet.h> //inet_addr
 //#include <opencv2\highgui.h>
 #include "opencv2/highgui/highgui.hpp"
 //#include <opencv2\cv.h>
 #include "opencv2/opencv.hpp"
+
+char * IP ="193.226.12.217";
+#define	PORT 20232
 
 using namespace std;
 using namespace cv;
@@ -196,10 +202,49 @@ void trackFilteredObject(int &x, int &y, Mat threshold, Mat &cameraFeed) {
 		else putText(cameraFeed, "TOO MUCH NOISE! ADJUST FILTER", Point(0, 50), 1, 2, Scalar(0, 0, 255), 2);
 	}
 }
+
+int sendThorughSocket(char *message){
+
+    int socket_desc;
+    struct sockaddr_in server;
+
+
+    //Create socket
+    socket_desc = socket(AF_INET , SOCK_STREAM , 0);
+    if (socket_desc == -1)
+    {
+        printf("Could not create socket");
+    }
+		//server = gethostbyname(IP);
+    server.sin_addr.s_addr = inet_addr("193.226.12.217");
+    server.sin_family = AF_INET;
+    server.sin_port = htons( PORT);
+
+    //Connect to remote server
+    if (connect(socket_desc , (struct sockaddr *)&server , sizeof(server)) < 0)
+    {
+        printf("connect error");
+        return 1;
+    }
+
+    puts("Connected\n");
+
+    //Send some data
+    if( send(socket_desc , message , strlen(message) , 0) < 0)
+    {
+        puts("Send failed");
+        return 1;
+    }
+    puts("Data Send\n");
+
+    return 0;
+
+}
+
 int main(int argc, char* argv[])
 {
 
-	//some boolean variables for different functionality within this
+/*	//some boolean variables for different functionality within this
 	//program
 	bool trackObjects = true;
 	bool useMorphOps = true;
@@ -225,11 +270,11 @@ int main(int argc, char* argv[])
 	//start an infinite loop where webcam feed is copied to cameraFeed matrix
 	//all of our operations will be performed within this loop
 
-
+*/
 
 
 	while (1) {
-capture.read(cameraFeed);
+/*capture.read(cameraFeed);
 if(cameraFeed.empty()){
 	printf("Empty buffer");
 	break;
@@ -260,7 +305,11 @@ else{
 		//delay 30ms so that screen can refresh.
 		//image will not appear without this waitKey() command
 		waitKey(30);
+	}*/
+
+char message[5];
+scanf("%s", message);
+printf("%d\n",sendThorughSocket(message));
 	}
-}
 	return 0;
 }
