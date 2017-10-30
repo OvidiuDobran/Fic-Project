@@ -229,10 +229,13 @@ int main(int argc, char* argv[])
 
 
 	while (1) {
-
-
-		//store image to matrix
-		capture.read(cameraFeed);
+capture.read(cameraFeed);
+if(cameraFeed.empty()){
+	printf("Empty buffer");
+	break;
+}
+else{
+		//store image to matri
 		//convert frame from BGR to HSV colorspace
 		cvtColor(cameraFeed, HSV, COLOR_BGR2HSV);
 		//filter HSV image between values and store filtered image to
@@ -258,6 +261,6 @@ int main(int argc, char* argv[])
 		//image will not appear without this waitKey() command
 		waitKey(30);
 	}
-
+}
 	return 0;
 }
