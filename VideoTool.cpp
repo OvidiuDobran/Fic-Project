@@ -13,7 +13,7 @@
 #include <unistd.h>
 
 char * IP ="193.226.12.217";
-#define	PORT 20232
+#define	PORT 20234
 
 using namespace std;
 using namespace cv;
@@ -256,7 +256,7 @@ int sendString(char * message){
 }
 
 
-char * orientate(int x , int y){
+/*char * orientate(int x , int y){
 	int x1=x;
 	int y1=y;
 	sendString("ffs");
@@ -292,7 +292,7 @@ char * orientate(int x , int y){
 			sendString("r");
 		}
 	}
-}
+}*/
 
 int main(int argc, char* argv[])
 {
@@ -330,7 +330,7 @@ int main(int argc, char* argv[])
 
 
 
-	while (1) {
+	while (1) {/*
 		capture.read(cameraFeed);
 		if(cameraFeed.empty()){
 			printf("Empty buffer");
@@ -373,12 +373,12 @@ int main(int argc, char* argv[])
 				//delay 30ms so that screen can refresh.
 				//image will not appear without this waitKey() command
 				waitKey(30);
-			}
+			}*/
 
-		//char message[5]="lrbs";
-		//scanf("%s", message);
-		//printf("%d\n",sendThorughSocket(message));
-		//sendString(message);
+		char message[5]="lrbs";
+		scanf("%s", message);
+		printf("%d\n",sendThorughSocket(message));
+		sendString(message);
 	}
 	return 0;
 }
