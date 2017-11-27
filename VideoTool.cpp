@@ -255,10 +255,49 @@ int sendString(char * message){
 	}
 }
 
+
+char * orientate(int x , int y){
+	int x1=x;
+	int y1=y;
+	sendString("ffs");
+	if (x1<frameWidth/2 && y1<frameHeight/2){
+		if(x1<x){
+			sendString("r");
+		}
+		if(y1<y){
+			sendString("r");
+		}
+	}
+	if (x1>frameWidth/2 && y1<frameHeight/2){
+		if(x1>x){
+			sendString("r");
+		}
+		if(y1<y){
+			sendString("r");
+		}
+	}
+	if (x1<frameWidth/2 && y1>frameHeight/2){
+		if(x1<x){
+			sendString("r");
+		}
+		if(y1>y){
+			sendString("r");
+		}
+	}
+	if (x1<frameWidth/2 && y1<frameHeight/2){
+		if(x1<x){
+			sendString("r");
+		}
+		if(y1<y){
+			sendString("r");
+		}
+	}
+}
+
 int main(int argc, char* argv[])
 {
 
-	/*//some boolean variables for different functionality within this
+	//some boolean variables for different functionality within this
 	//program
 	bool trackObjects = true;
 	bool useMorphOps = true;
@@ -288,10 +327,10 @@ int main(int argc, char* argv[])
 	//start an infinite loop where webcam feed is copied to cameraFeed matrix
 	//all of our operations will be performed within this loop
 
-*/
 
 
-	while (1) {/*
+
+	while (1) {
 		capture.read(cameraFeed);
 		if(cameraFeed.empty()){
 			printf("Empty buffer");
@@ -335,11 +374,11 @@ int main(int argc, char* argv[])
 				//image will not appear without this waitKey() command
 				waitKey(30);
 			}
-*/
-		char message[5]="lrbs";
+
+		//char message[5]="lrbs";
 		//scanf("%s", message);
 		//printf("%d\n",sendThorughSocket(message));
-		sendString(message);
+		//sendString(message);
 	}
 	return 0;
 }
